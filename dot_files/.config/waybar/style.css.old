@@ -1,0 +1,90 @@
+/* Cleanly import the dynamic color file created by Matugen */
+@import "colors.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Iosevka Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+window#waybar {
+    /* 🌟 Safely adds 85% opacity to the pure @surface color variable */
+    background-color: alpha(@surface, 0.85); 
+    border-bottom: 3px solid @primary;
+    color: @on_surface;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+
+
+/* Workspace styling */
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @on_surface;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inherit;
+    border-bottom: 3px solid @primary;
+}
+
+/* Highlights your ACTIVE workspace ticker */
+#workspaces button.focused {
+    background-color: @primary_container;
+    border-bottom: 3px solid @primary;
+    color: @on_primary_container;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+/* Individual Module Spacing */
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#mode,
+#scratchpad {
+    padding: 0 10px;
+    color: @on_surface;
+}
+
+#clock {
+    color: @on_surface;
+}
+
+#battery.charging, #battery.plugged {
+    color: #26A65B;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* Clean styling for the Power Action module */
+#custom-power {
+    color: #ef4444; 
+    padding: 0 15px;
+    font-size: 16px;
+}

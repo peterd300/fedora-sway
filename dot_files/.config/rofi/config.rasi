@@ -1,0 +1,22 @@
+configuration {
+    /* 1. Core Operating Modes */
+    modi: "drun,run,filebrowser";
+    show-icons: true;
+    icon-theme: "Papirus"; /* Change to your preferred icon theme */
+    terminal: "foot";       /* Sets your default fallback terminal */
+
+    /* 2. Search Behavior Rules */
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-filebrowser: "   Files ";
+    sidebar-mode: true;
+
+    /* 3. Your Custom Navigation Fixes */
+    kb-page-next: "Page_Down";
+    kb-page-prev: "Page_Up";
+}
+
+/* 4. Link it permanently to your dynamic pywal colors */
+@theme "~/.cache/wal/colors-rofi-dark.rasi"

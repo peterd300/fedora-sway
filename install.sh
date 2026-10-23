@@ -49,8 +49,7 @@ sudo sed -i 's/^#\s*set bell-style none/set bell-style none/' /etc/inputrc
 sudo dnf -y install tree htop btop make bat git wget unzip nano cmake curl gcc net-tools fastfetch trash-cli micro
 
 # install sway tiling wm
-sudo dnf -y install sway swaybg foot rofi-wayland waybar wl-clipboard
-
+sudo dnf -y install sway swaybg rofi-wayland waybar wl-clipboard wofi
 
 sudo dnf -y install xdg-desktop-portal-gtk xdg-utils 
 
@@ -61,7 +60,7 @@ sudo dnf -y install pavucontrol pasystray
 
 
 # install some grapical progs
-sudo dnf -y install kitty foot firefox copyq
+sudo dnf -y install kitty foot firefox copyq xev swayimg imv
 
 # install file manager
 sudo dnf install -y thunar-archive-plugin thunar-media-tags-plugin thunar-vcs-plugin thunar-volman thunar
@@ -74,4 +73,4 @@ geany-plugins-git-changebar geany-plugins-treebrowser
 
 sudo dnf -y install NetworkManager-tui blueman network-manager-applet brightnessctl pipewire-utils wireplumber
 
-sudo dnf -y install swww matugen
+sudo dnf -y install swww mako 

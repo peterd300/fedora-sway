@@ -22,7 +22,7 @@ set $menu rofi -show drun
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg  $HOME/Wallpapers/wallhaven-lygo7y_1920x1080.png fill
+# output * bg  $HOME/Wallpapers/wallhaven-lygo7y_1920x1080.png fill
 
 #
 # Example configuration:
@@ -95,6 +95,7 @@ exec swayidle -w \
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
+    
     # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
@@ -219,23 +220,35 @@ bindsym $mod+r mode "resize"
     bindsym $mod+t exec thunar
     bindsym $mod+z exec firefox
     bindsym $mod+Shift+Return exec kitty
-
+    bindsym $mod+Mod1+Return exec xterm
+    bindsym $mod+Shift+slash exec ~/.local/bin/sway-keys.sh
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
+# bar {
+#    position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+#    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+ #   colors {
+ #       statusline #ffffff
+ #       background #323232
+ #       inactive_workspace #32323200 #32323200 #5c5c5c
+ #   }
+#}
+
+    exec --no-startup-id waybar
+    # initialize wallpaper deamon
+    exec_always swww-daemon	
+    exec --no-startup-id mako
 
 include /etc/sway/config.d/*
+
+
+
+# Force pavucontrol to float and set a smaller custom window size
+for_window [app_id="pavucontrol"] floating enable, resize set 600 px 400 px, move position center
+bindsym --release Escape [app_id="pavucontrol"] kill

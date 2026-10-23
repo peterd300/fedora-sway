@@ -1,0 +1,32 @@
+# Global Style Settings
+font=monospace 10
+border-size=2
+border-radius=5
+progress-color=over #35b3e6
+
+# Layout & Positioning
+max-visible=5
+sort=-time
+layer=top
+anchor=top-right
+margin=20
+padding=15
+width=300
+height=110
+
+# Timing & Behavior
+default-timeout=5000
+ignore-timeout=0
+
+# Include pywal16 colors dynamically
+include=~/.cache/wal/colors-mako
+
+
+# Change appearance for critical alerts (e.g., low battery)
+[urgency=high]
+border-color=#ff5555
+default-timeout=0
+
+# Keep Spotify notifications on screen for less time
+[app-name=Spotify]
+default-timeout=2000
