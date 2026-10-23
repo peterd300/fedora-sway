@@ -1,0 +1,127 @@
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias ~='cd ~'
+
+# Easy report
+alias grep='grep --color=auto'
+# alias l='ls -l'
+# alias la='ls -lA'
+#alias lr='ls -R'
+#alias ls='eza --group-directories-first --git'
+#alias lf='ls -l | grep "^-"'
+#alias l.f='ls -ld .* | grep "^-"'
+#alias ld='ls -l | grep "^d"'
+#alias l.d='ls -ld .* | grep "^d"'
+alias ll='eza -la --group-directories-first --git'
+
+#chris titus aliasses
+alias ls='ls --color=auto'
+alias lm='ls -alh --color=always |more' # pipe through 'more'
+alias lw='ls -xAh'                # wide listing format
+alias ll='ls -Fls'                # long listing format
+alias lf="ls -l | grep -Ev '^d'"  # files only
+alias ldir="ls -l | grep -E '^d'" # directories only
+alias lla='ls -Al'                # List and Hidden Files
+alias las='ls -A'                 # Hidden Files
+alias lls='ls -l'                 # List
+
+alias df='df -h'
+alias du='du -h'
+
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+alias fdir='find . -type d -name'		# Search dir in the current folder
+alias f='find . -type f -name'			# Search files in the current folder
+alias h='history'
+alias hgrep='history | grep'
+alias lgrep='ls -l | grep'
+alias lagrep='ls -lA | grep'
+alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,node_modules,tealdeer,Trash,vendor}'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias ln='ln -iv'
+alias mkdir='mkdir -v'
+#alias rm='rm -i'
+#alias rmf='rm -rf'
+alias uptime='uptime -p'
+alias free='free -h'
+alias disk='df -h | grep sd \
+    | sed -e "s_/dev/sda[1-9]_\x1b[34m&\x1b[0m_" \
+    | sed -e "s_/dev/sd[b-z][1-9]_\x1b[33m&\x1b[0m_" \
+    | sed -e "s_[,0-9]*[MG]_\x1b[36m&\x1b[0m_" \
+    | sed -e "s_[0-9]*%_\x1b[32m&\x1b[0m_" \
+    | sed -e "s_9[0-9]%_\x1b[31m&\x1b[0m_" \
+    | sed -e "s_/mnt/[-_A-Za-z0-9]*_\x1b[34;1m&\x1b[0m_"'
+
+alias preview='fzf --height=50% --layout=reverse --preview="bat --color=always {}"'
+alias ping='ping -c 5'
+alias less='less -R'
+
+# Shortcuts
+alias c='clear'
+alias cat='bat'
+alias ch='echo > ~/.bash_history && echo > ~/.zsh_history'
+
+alias ff='fastfetch'
+alias htop-user='htop -u "$USER"'
+# alias mdv='glow -p -s ~/.config/glow/Material-Theme-Darker.json'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+alias timer='echo "Timer started. Stop with Ctrl-D." && date "+%a, %d %b %H:%M:%S" && time cat && date "+%a, %d %b %H:%M:%S"'
+
+# To see if a command is aliased, a file, or a built-in command
+alias checkcommand="type -t"
+
+
+# replace rm -with trash, safe deletions
+if command -v trash-put >/dev/null 2>&1; then
+	alias rm='trash-put'
+elif command -v trash >/dev/null 2>&1; then
+	alias rm='trash -v'
+elif command -v gio >/dev/null 2>&1; then
+	alias rm='gio trash'
+else
+	alias rm='rm -i'
+fi
+
+
+
+# Developer shortcuts
+alias g='git'
+alias v='nvim'
+alias e='micro'
+alias nano='nano -l'
+alias snano='sudo nano -l'
+alias smicro='sudo micro'
+
+# Typos
+alias :q='exit'
+alias help='man'
+alias quit='exit'
+
+#alias ls='ls --color=auto'
+#alias ll='ls -al --color=auto'
+
+# xbps aliases
+alias xi='sudo xbps-install -Sy'
+alias xu='sudo xbps-install -Su'
+alias xq='sudo xbps-query -Rs'
+
+
+# Git aliases
+alias gp="git push -u origin main"
+alias gsave="git commit -m 'save'"
+alias gm="git commit -m" $1
+alias gs="git status"
+alias gc="git clone"
+
+
+
+
+# Search running processes
+alias p="ps aux | grep "
+alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"

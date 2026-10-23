@@ -1,0 +1,143 @@
+# Clean Debian packages
+apt-clean() {
+    sudo apt-get clean
+    sudo apt-get autoclean
+    sudo apt-get autoremove
+}
+
+# Create a new directory and enter it
+mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+# Print README file
+readme() {
+    for readme in {readme,README}.{md,MD,markdown,mkd,txt,TXT}; do
+        if [[ -x "$(command -v glow)" ]] && [[ -f "$readme" ]]; then
+            mdv "$readme"
+        elif [[ -f "$readme" ]]; then
+            cat "$readme"
+        fi
+    done
+}
+
+weather() {
+    curl -s "https://wttr.in/${1:-Scheveningen}?m2F&format=v2"
+}
+
+
+# Get an information of IP address
+ip-address() {
+    curl -s -H "Accept: application/json" "https://ipinfo.io/${1:-}" | jq "del(.loc, .postal, .readme)" || \
+    curl -s -H "Accept: application/json" "https://am.i.mullvad.net" | jq "del(.longitude, .latitude, .mullvad_exit_ip, .blacklisted)"
+}
+
+
+# Incognito mode
+incognito() {
+    unset HISTFILE
+    if [ -x "$(command -v tmux)" ]; then
+        tmux set-option window-status-current-format "#[fg=brightwhite,bg=#b487b4] #I #[fg=brightwhite,bg=#966396] #W "
+    fi
+}
+
+# Git commit browser
+fshow() {
+    local commit_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+    local view_commit="$commit_hash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+    git log --color=always \
+        --format="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" "$@" | \
+    fzf --no-sort --tiebreak=index --no-multi --reverse --ansi \
+        --header="enter to view, alt-y to copy hash" --preview="$view_commit" \
+        --bind="enter:execute:$view_commit | less -R" \
+        --bind="alt-y:execute:$commit_hash | xclip -selection clipboard"
+}
+
+# Remove all commit in Git
+git-remove-all-commit() {
+    local branch response
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || {
+        echo "Not in a git repository (or HEAD is detached)." >&2
+        return 1
+    }
+
+    printf '\nRemove all commit history in \033[1m%s\033[0m branch? [y/N] ' "$branch"
+    read -r response
+
+    case "$response" in
+        [yY]|[yY][eE][sS])
+            git checkout --orphan latest_branch &&
+            git add -A &&
+            git commit -m "Initial commit" &&
+            git branch -D "$branch" &&
+            git branch -m "$branch" &&
+            printf '\nTo force update your repository, run:\n\n    git push -fu origin %s\n' "$branch"
+            ;;
+        *)
+            echo "Cancelled."
+            ;;
+    esac
+}
+
+
+# Searches for text in all files in the current folder
+ftext() {
+	# -i case-insensitive
+	# -I ignore binary files
+	# -H causes filename to be printed
+	# -r recursive search
+	# -n causes line number to be printed
+	# optional: -F treat search term as a literal, not a regular expression
+	# optional: -l only print filenames and not the matching lines ex. grep -irl "$1" *
+	grep -iIHrn --color=always "$1" . | less -r
+}
+
+# Copy file with a progress bar
+cpp() {
+	if [ "$#" -ne 2 ]; then
+		echo "Usage: cpp SOURCE DESTINATION"
+		return 2
+	fi
+	if ! command -v strace >/dev/null 2>&1; then
+		echo "cpp requires strace."
+		return 1
+	fi
+	strace -q -ewrite cp -- "$1" "$2" 2>&1 |
+		awk '{
+		count += $NF
+		if (count % 10 == 0 && total_size > 0) {
+			percent = int(count / total_size * 100)
+			if (percent > 100) percent = 100
+			printf "%3d%% [", percent
+			for (i=0;i<=percent;i++)
+				printf "="
+			printf ">"
+			for (i=percent;i<100;i++)
+				printf " "
+			printf "]\r"
+		}
+	}
+	END { print "" }' total_size="$(_bashrc_file_size "$1")" count=0
+}
+
+
+# GitHub Titus Additions
+
+gcom() {
+	if [ -z "$1" ]; then
+		echo "Usage: gcom \"commit message\""
+		return 2
+	fi
+	git add .
+	git commit -m "$1"
+}
+
+lazyg() {
+	if [ -z "$1" ]; then
+		echo "Usage: lazyg \"commit message\""
+		return 2
+	fi
+	git add .
+	git commit -m "$1"
+	git push
+}
