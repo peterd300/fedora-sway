@@ -240,12 +240,18 @@ bindsym $mod+r mode "resize"
  #   }
 #}
 
-    exec --no-startup-id waybar
-    # initialize wallpaper deamon
-    exec_always swww-daemon	
-    exec --no-startup-id mako
+     exec --no-startup-id waybar
+     exec --no-startup-id mako
+}
 
-include /etc/sway/config.d/*
+	# Laad de systeemconfiguraties eerst in
+	include /etc/sway/config.d/*
+
+	# Zorg dat Sway ook de Pywal-kleuren zelf inlaadt
+	include ~/.cache/wal/colors-sway
+
+	# ALTIJD ALS ALLERLAATSTE: Herstel Pywal en de achtergrond na een reboot
+	exec_always ~/.config/sway/autostart.sh
 
 
 

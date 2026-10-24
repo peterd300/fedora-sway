@@ -3,7 +3,7 @@
 #  Install script for Wayland anD Sway  Tiling Windows Manager
 #  
 sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf -y copr enable alebastr/sway-extras # for swww
+# sudo dnf -y copr enable alebastr/sway-extras # for swww
 
 sudo dnf -y upgrade --refresh
 
@@ -56,5 +56,24 @@ sleep 3
 pipx install pywal16
 pipx ensurepath
 sleep 3
+
+# install several fonts
+$HOME/fedora-sway/scripts/install-font-iosevka.sh
+$HOME/fedora-sway/scripts/install-font-iosevkaterm.sh
+$HOME/fedora-sway/scripts/install-font-jetbrainsnerd-mono.sh
+$HOME/fedora-sway/scripts/install-ttyfont.sh
+
+# install SAMBA Client
+$HOME/fedora-sway/scripts/install-smbclient.sh
+
+$HOME/fedora-sway/scripts/fish/install.sh
+
+# copy wallpapers
+cp -Rv $HOME/fedora-sway/Wallpapers $HOME/.
+
+
+
+
+
 
 

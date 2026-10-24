@@ -6,16 +6,14 @@
 
 # add install :
 
-
-
 sudo dnf -y upgrade --refresh
 sudo dnf update
 
 #install wifi firmware and drivres
-sudo dnf install linux-firmware iwlwifi-mvm-firmware NetworkManager-wifi
+sudo dnf install linux-firmware iwlwifi-mvm-firmware NetworkManager NetworkManager-wifi
 
 # enable bluethooth
-sudo dnf install power-profiles-daemon bluez 
+sudo dnf install bluez 
 sudo systemctl enable --now bluetooth
 
 #sudo dnf install fwupd 

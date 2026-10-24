@@ -8,8 +8,10 @@ fi
 
 WALLPAPER="$1"
 
+# Sla het pad op voor herstel na een reboot
+echo "$WALLPAPER" > "$HOME/.cache/current_wallpaper"
+
 # 1. Run pywal16 to generate color palettes from the image
-# (-n skips setting the X11 wallpaper since we are on Sway/Wayland)
 wal -i "$WALLPAPER" -n
 
 # 2. Update Sway's wallpaper background live
@@ -24,8 +26,8 @@ pkill -USR1 '^kitty$'
 # 5. Signal Waybar to refresh its styles without killing it
 pkill -USR2 '^waybar$'
 
-# 6.  Reload Mako with the newly generated colors
+# 6. Reload Mako with the newly generated colors
 makoctl reload
 
-
 notify-send -i "$WALLPAPER" "Theme Updated" "Wallpaper changed to: $(basename "$WALLPAPER")"
+
