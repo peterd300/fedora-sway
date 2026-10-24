@@ -6,24 +6,39 @@
 
 # add install :
 
-sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf copr enable alebastr/sway-extras # for swww
+
 
 sudo dnf -y upgrade --refresh
+sudo dnf update
 
-sudo dnf install iwlwifi-mvm-firmware
-sudo dnf install fwupd power-profiles-daemon bluez NetworkManager-wifi
+#install wifi firmware and drivres
+sudo dnf install linux-firmware iwlwifi-mvm-firmware NetworkManager-wifi
+
+# enable bluethooth
+sudo dnf install power-profiles-daemon bluez 
 sudo systemctl enable --now bluetooth
 
-sudo fwupdmgr refresh && sudo fwupdmgr get-updates
- 
-#load wifi modufles 
+#sudo dnf install fwupd 
+#sudo fwupdmgr refresh && sudo fwupdmgr get-updates
+
+
+#Unload the crashed driver
 sudo modprobe -r iwlwifi
-# restart NetworkManager
+
+# Reload the driver into the kernel
+sudo modprobe iwlwifi
+lsmod |grep -i iwlwifi
+
+sudo systemctl start NetworkManager
+sudo systemctl enable NetworkManager
+
+# Restart NetworkManager right after
 sudo systemctl restart NetworkManager
 
+lspci | grep -i network
+
 # show wireless interfaces
-nmcli radio
+sudo nmcli radio
 sudo nmcli radio wifi on
 rfkill list
 nmcli device

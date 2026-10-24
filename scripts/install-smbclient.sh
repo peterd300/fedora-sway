@@ -12,7 +12,7 @@ exec > >(tee -a "$log_file") 2>&1
 [ -d "$logdir" ] && mkdir -p $logdir
 
 
-sudo dnf install gnome-keyring smbclient cifs-utils gvfs-smb
+sudo dnf install -y gnome-keyring smbclient cifs-utils gvfs-smb
 
 
 NEW_LINES=$(cat << 'EOF'

@@ -2,19 +2,22 @@
 !/bin/bash
 #  Install script for Wayland anD Sway  Tiling Windows Manager
 #  
-sudo dnf update --refresh
+sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf -y copr enable alebastr/sway-extras # for swww
+
+sudo dnf -y upgrade --refresh
 
 # improve download performance
-sudo nano /etc/dnf/dnf.conf
-````bash
-max_parallel_downloads=10
-fastestmirror=True
-````
+#sudo nano /etc/dnf/dnf.conf
+#````bash
+#max_parallel_downloads=10
+#fastestmirror=True
+#````
 
 # disable enoying beep in terminal
 
 sudo sed -i 's/^#\s*set bell-style none/set bell-style none/' /etc/inputrc
-
+sleep 3
 
 # install cli utils
 sudo dnf -y install tree htop btop make bat git wget unzip nano cmake curl gcc net-tools fastfetch trash-cli micro
@@ -45,3 +48,13 @@ geany-plugins-git-changebar geany-plugins-treebrowser
 sudo dnf -y install NetworkManager-tui blueman network-manager-applet brightnessctl pipewire-utils wireplumber
 
 sudo dnf -y install swww mako 
+
+# Install pipx and ImageMagick 
+sudo dnf -y install pipx imagemagick
+sleep 3
+# Install pywal16:bash
+pipx install pywal16
+pipx ensurepath
+sleep 3
+
+
