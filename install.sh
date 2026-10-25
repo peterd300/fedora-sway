@@ -20,7 +20,7 @@ sudo sed -i 's/^#\s*set bell-style none/set bell-style none/' /etc/inputrc
 sleep 3
 
 # install cli utils
-sudo dnf -y install tree htop btop make bat git wget unzip nano cmake curl gcc net-tools fastfetch trash-cli micro
+sudo dnf -y install tree htop btop make bat git wget unzip nano cmake curl gcc net-tools fastfetch trash-cli micro vim
 
 # install sway tiling wm
 sudo dnf -y install sway swaybg rofi-wayland waybar wl-clipboard wofi
@@ -44,13 +44,16 @@ sudo dnf install -y geany geany-themes geany-plugins-vimode  geany-plugins-commo
 geany-plugins-addons geany-plugins-autoclose geany-plugins-automark geany-plugins-markdown \
 geany-plugins-git-changebar geany-plugins-treebrowser
 
+# icons themes
+sudo dnf install -y papirus-icon-theme
+
 
 sudo dnf -y install NetworkManager-tui blueman network-manager-applet brightnessctl pipewire-utils wireplumber
 
-sudo dnf -y install swww mako 
+sudo dnf -y install mako 
 
 # Install pipx and ImageMagick 
-sudo dnf -y install pipx imagemagick
+sudo dnf -y install pipx ImageMagick
 sleep 3
 # Install pywal16:bash
 pipx install pywal16
@@ -66,6 +69,7 @@ $HOME/fedora-sway/scripts/install-ttyfont.sh
 # install SAMBA Client
 $HOME/fedora-sway/scripts/install-smbclient.sh
 
+# install fish shell
 $HOME/fedora-sway/scripts/fish/install.sh
 
 # copy wallpapers

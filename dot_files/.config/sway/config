@@ -217,10 +217,23 @@ bindsym $mod+r mode "resize"
     bindsym Print exec grim
 
     bindsym $mod+g exec geany
+    assign [app_id="geany"] workspace number 3
+    
     bindsym $mod+t exec thunar
+    
     bindsym $mod+z exec firefox
+    assign [app_id="firefox"] workspace number 2
+    
+#
+# termimals
+#
     bindsym $mod+Shift+Return exec kitty
+    assign [app_id="kitty"] workspace number 1
     bindsym $mod+Mod1+Return exec xterm
+    assign [app_id="xterm"] workspace number 1
+    assign [app_id="foot"] workspace number 1
+    
+# display keybindings
     bindsym $mod+Shift+slash exec ~/.local/bin/sway-keys.sh
 #
 # Status Bar:
@@ -240,10 +253,12 @@ bindsym $mod+r mode "resize"
  #   }
 #}
 
-     exec --no-startup-id waybar
+     exec dbus-update-activation-environment --systemd SWAYSOCK XDG_CURRENT_DESKTOP=sway
+     exec --no-startup-id waybar > /dev/null 2>&1
      exec --no-startup-id mako
 }
-
+	 exec nm-applet --indicator
+	
 	# Laad de systeemconfiguraties eerst in
 	include /etc/sway/config.d/*
 
@@ -257,4 +272,10 @@ bindsym $mod+r mode "resize"
 
 # Force pavucontrol to float and set a smaller custom window size
 for_window [app_id="pavucontrol"] floating enable, resize set 600 px 400 px, move position center
+# Maak het nmtui venster zwevend met een vaste grootte
+for_window [app_id="network-float"] floating enable, resize set 800 px 600 px, move position center
+
 bindsym --release Escape [app_id="pavucontrol"] kill
+
+
+

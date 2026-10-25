@@ -19,4 +19,4 @@ configuration {
 }
 
 /* 4. Link it permanently to your dynamic pywal colors */
-@theme "~/.cache/wal/colors-rofi-dark.rasi"
+@theme "~/.cache/wal/colors-rofi-light.rasi"

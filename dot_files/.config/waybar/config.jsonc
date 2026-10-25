@@ -5,7 +5,8 @@
     "spacing": 4, 
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "custom/power"],
+    "modules-right": ["pulseaudio", "network","tray" , "cpu", "memory", "battery",
+     "custom/power"],
 
     // Sway Workspaces Module
     "sway/workspaces": {
@@ -37,11 +38,11 @@
 
     // Clock (Time & Date combined)
     "clock": {
-        "timezone": "auto",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "🕒 {:%H:%M}",
-        "format-alt": "📅 {:%A, %B %d, %Y}"
-    },
+    "timezone": "Europe/Amsterdam",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><span size='16pt'>{calendar}</span></tt>",
+    "format": "🕒 {:%H:%M}",
+    "format-alt": "📅 {:%A, %B %d, %Y}"
+},
 
     // CPU Usage
     "cpu": {
@@ -76,9 +77,10 @@
         "tooltip-format": " {ifname} via {gwaddr}",
         "format-linked": " {ifname} (No IP)",
         "format-disconnected": "⚠ Disconnected",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        
     },
-
+	
     // Audio Controls (With visual spacing & Right-Click Mute)
     "pulseaudio": {
         "format": "{icon}   {volume}%",
@@ -97,7 +99,7 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol",
-        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     },
 
     // Crash-Proof Power Menu (Uses stable Swaynag overlays)
@@ -105,6 +107,15 @@
         "format": "⏻",
         "tooltip": true,
         "tooltip-format": "Power Menu Options",
-        "on-click": "swaynag -t warning -m 'Power Options Menu:' -b 'Logout' 'swaymsg exit' -b 'Reboot' 'systemctl reboot' -b 'Shutdown' 'systemctl poweroff' -b 'Switch User' 'dm-tool switch-to-greeter || loginctl lock-session'"
-    }
+        "on-click": "killall swaynag || true; swaynag -t warning -m 'Power Options Menu:' -b 'Logout' 'swaymsg exit' -b 'Reboot' 'systemctl reboot' -b 'Shutdown' 'systemctl poweroff' -b 'Switch User' 'dm-tool switch-to-greeter || loginctl lock-session'"
+
+    },
+    
+    "tray": {
+		"icon-size": 16,
+		"spacing": 10
+	}
+    
+    
+
 }

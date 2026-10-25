@@ -6,16 +6,26 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-WALLPAPER="$1"
+# Zorg ervoor dat het pad ALTIJD absoluut is (krijgt de volledige mapstructuur mee)
+WALLPAPER=$(realpath "$1")
 
 # Sla het pad op voor herstel na een reboot
 echo "$WALLPAPER" > "$HOME/.cache/current_wallpaper"
 
 # 1. Run pywal16 to generate color palettes from the image
-wal -i "$WALLPAPER" -n
+wal -i "$WALLPAPER" -n -e
 
-# 2. Update Sway's wallpaper background live
-swaymsg "output * background $WALLPAPER fill"
+# 2. Update Sway's wallpaper background live (met de gefixte SDDM-socketzoeker)
+export SWAYSOCK=$(find /run/user/$(id -u) -name "sway-ipc.*.sock" 2>/dev/null | head -n 1)
+swaymsg "output * bg \"$WALLPAPER\" fill"
+
+
+if [ -n "$SWAYSOCK" ]; then
+    swaymsg "output * bg \"$WALLPAPER\" fill"
+else
+    # Als fallback proberen we het via de standaard omgevingsvariabele
+    swaymsg "output * bg \"$WALLPAPER\" fill" || echo "Swaymsg kon geen verbinding maken met de socket."
+fi
 
 # 3. Reload Foot terminal (sends SIGUSR1 to all running instances)
 pkill -USR1 '^foot$'

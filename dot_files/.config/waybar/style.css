@@ -53,3 +53,11 @@ window#waybar {
     font-size: 16px;
 }
 
+#clock.tooltip {
+    font-size: 16px; /* Pas dit getal aan om de hele tooltip groter/kleiner te maken */
+}
+
+#clock.tooltip table {
+    font-size: 16px; /* Zorgt ervoor dat de kalenderdagen zelf mee schalen */
+    padding: 5px;
+}
