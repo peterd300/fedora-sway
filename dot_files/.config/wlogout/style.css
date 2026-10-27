@@ -1,0 +1,65 @@
+/* --- wlogout Configuration --- */
+
+/* Main Window Layout */
+window {
+    background-image: url("/home/peter/.cache/blurred_wallpaper.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: "Noto Sans", sans-serif;
+}
+
+/* Individual Grid Buttons */
+button {
+    color: #ffffff;
+    background-color: rgba(30, 30, 46, 0.7); /* Dark transparent menu boxes */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+    transition: all 0.2s ease-in-out;
+    box-shadow: none; /* Removes any default GTK focus shadow rings */
+}
+
+/* Hidden Initial Focus State */
+button:focus {
+    outline: none;
+    box-shadow: none;
+    /* Keeps the look identical to the default button state */
+    background-color: rgba(30, 30, 46, 0.7); 
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Clean Hover State (Triggers only when mouse moves over it) */
+button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Brighter only on explicit mouse hover */
+    border: 2px solid #ffffff;
+    outline: none;
+}
+
+/* Base wlogout System Icons Mapping */
+#lock {
+    background-image: url("/usr/share/wlogout/icons/lock.png");
+}
+
+#logout {
+    background-image: url("/usr/share/wlogout/icons/logout.png");
+}
+
+#suspend {
+    background-image: url("/usr/share/wlogout/icons/suspend.png");
+}
+
+#hibernate {
+    background-image: url("/usr/share/wlogout/icons/hibernate.png");
+}
+
+#shutdown {
+    background-image: url("/usr/share/wlogout/icons/shutdown.png");
+}
+
+#reboot {
+    background-image: url("/usr/share/wlogout/icons/reboot.png");
+}

@@ -107,8 +107,8 @@
         "format": "⏻",
         "tooltip": true,
         "tooltip-format": "Power Menu Options",
-        "on-click": "killall swaynag || true; swaynag -t warning -m 'Power Options Menu:' -b 'Logout' 'swaymsg exit' -b 'Reboot' 'systemctl reboot' -b 'Shutdown' 'systemctl poweroff' -b 'Switch User' 'dm-tool switch-to-greeter || loginctl lock-session'"
-
+//     "on-click": "killall swaynag || true; swaynag -t warning -m 'Power Options Menu:' -b 'Logout' 'swaymsg exit' -b 'Reboot' 'systemctl reboot' -b 'Shutdown' 'systemctl poweroff' -b 'Switch User' 'dm-tool switch-to-greeter || loginctl lock-session'"
+        "on-click": "wlogout",       
     },
     
     "tray": {

@@ -143,7 +143,7 @@ exec swayidle -w \
 # Layout stuff:
 #
 
-	workspace_layout tabbed
+	# workspace_layout tabbed
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
@@ -217,21 +217,21 @@ bindsym $mod+r mode "resize"
     bindsym Print exec grim
 
     bindsym $mod+g exec geany
-    assign [app_id="geany"] workspace number 3
+#    assign [app_id="geany"] workspace number 3
     
     bindsym $mod+t exec thunar
     
     bindsym $mod+z exec firefox
-    assign [app_id="firefox"] workspace number 2
+#    assign [app_id="firefox"] workspace number 2
     
 #
 # termimals
 #
     bindsym $mod+Shift+Return exec kitty
-    assign [app_id="kitty"] workspace number 1
+#    assign [app_id="kitty"] workspace number 1
     bindsym $mod+Mod1+Return exec xterm
-    assign [app_id="xterm"] workspace number 1
-    assign [app_id="foot"] workspace number 1
+#    assign [app_id="xterm"] workspace number 1
+#    assign [app_id="foot"] workspace number 1
     
 # display keybindings
     bindsym $mod+Shift+slash exec ~/.local/bin/sway-keys.sh

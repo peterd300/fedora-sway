@@ -1,0 +1,10 @@
+image=/home/peter/.cache/blurred_wallpaper.png
+# image=/home/peter/Wallpaper/wallhaven-2.png
+scaling=center
+show-failed-attempts
+ring-color=#ffffff
+indicator-caps-lock
+indicator-idle-visible
+indicator-radius=125
+indicator-thickness=25
+ignore-empty-password

@@ -3,7 +3,9 @@
 #  Install script for Wayland anD Sway  Tiling Windows Manager
 #  
 sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-# sudo dnf -y copr enable alebastr/sway-extras # for swww
+sudo dnf -y copr enable alebastr/sway-extras # for swww
+sudo dnf -y copr enable solopasha/hyprland   # for waypaper
+
 
 sudo dnf -y upgrade --refresh
 
@@ -46,6 +48,9 @@ geany-plugins-git-changebar geany-plugins-treebrowser
 
 # icons themes
 sudo dnf install -y papirus-icon-theme
+
+# install wallpaper switcher
+sudo dnf install -y waypaper swww
 
 
 sudo dnf -y install NetworkManager-tui blueman network-manager-applet brightnessctl pipewire-utils wireplumber
