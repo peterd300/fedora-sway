@@ -4,6 +4,9 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+# LINE 1: Load the pywal variables first
+include /home/peter/.cache/wal/colors-sway
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -82,11 +85,21 @@ exec swayidle -w \
     # mouse button for dragging.
     floating_modifier $mod normal
 
-    # Reload the configuration file
-    bindsym $mod+Shift+c reload
+# Reload the configuration file
+# bindsym $mod+Shift+c reload
 
-    # Exit sway (logs you out of your Wayland session)
+#  Reload the configuration file and send a notification
+    bindsym $mod+Shift+c exec sh -c "swaymsg reload && notify-send 'Sway Config:' 'Configuration reloaded successfully!'"
+
+#  Press Mod + Shift + B to cleanly reload Waybar and send a notification
+   bindsym $mod+Shift+b exec killall -SIGUSR2 waybar; exec notify-send "Waybar" "Swaybar reloaded"		
+
+# Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Lock the screen 
+    bindsym $mod+ctrl+l  exec swaylock		
+
 #
 # Moving around:
 #
@@ -142,6 +155,24 @@ exec swayidle -w \
 #
 # Layout stuff:
 #
+
+default_border pixel 5
+
+# Class                 Border           BG              Text             Indicator        Child Border
+client.focused          $color1          $color1         $color7          $color2          $color1
+client.focused_inactive $color0          $color0         $color7          $color0          $color0
+client.unfocused        $color0          $color0         $color7          $color0          $color0
+client.urgent           $color3          $color3         $color7     
+
+
+
+
+   # Inner gaps affect spacing between each individual view/window
+     gaps inner 10
+
+   # Outer gaps affect spacing around the edges of the workspace
+    gaps outer 5
+
 
 	# workspace_layout tabbed
     # You can "split" the current object of your focus with
@@ -210,9 +241,11 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
     bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
     bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
     # Special key to take a screenshot with grim
     bindsym Print exec grim
 
@@ -224,14 +257,12 @@ bindsym $mod+r mode "resize"
     bindsym $mod+z exec firefox
 #    assign [app_id="firefox"] workspace number 2
     
+
 #
 # termimals
 #
     bindsym $mod+Shift+Return exec kitty
-#    assign [app_id="kitty"] workspace number 1
-    bindsym $mod+Mod1+Return exec xterm
-#    assign [app_id="xterm"] workspace number 1
-#    assign [app_id="foot"] workspace number 1
+    bindsym $mod+Alt+Return exec xterm
     
 # display keybindings
     bindsym $mod+Shift+slash exec ~/.local/bin/sway-keys.sh
@@ -256,14 +287,17 @@ bindsym $mod+r mode "resize"
      exec dbus-update-activation-environment --systemd SWAYSOCK XDG_CURRENT_DESKTOP=sway
      exec --no-startup-id waybar > /dev/null 2>&1
      exec --no-startup-id mako
-}
+     # load .Xresources for X11 apps
+     exec xrdb -merge -display $DISPLAY ~/.Xresources
+
+
 	 exec nm-applet --indicator
 	
 	# Laad de systeemconfiguraties eerst in
 	include /etc/sway/config.d/*
 
 	# Zorg dat Sway ook de Pywal-kleuren zelf inlaadt
-	include ~/.cache/wal/colors-sway
+#	include ~/.cache/wal/colors-sway
 
 	# ALTIJD ALS ALLERLAATSTE: Herstel Pywal en de achtergrond na een reboot
 	exec_always ~/.config/sway/autostart.sh
@@ -272,10 +306,12 @@ bindsym $mod+r mode "resize"
 
 # Force pavucontrol to float and set a smaller custom window size
 for_window [app_id="pavucontrol"] floating enable, resize set 600 px 400 px, move position center
+bindsym --release Escape [app_id="pavucontrol"] kill
+
 # Maak het nmtui venster zwevend met een vaste grootte
 for_window [app_id="network-float"] floating enable, resize set 800 px 600 px, move position center
 
-bindsym --release Escape [app_id="pavucontrol"] kill
+
 
 
 
