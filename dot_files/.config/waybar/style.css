@@ -3,7 +3,7 @@
 
 * {
     font-family: "JetBrainsMono Nerd Font", "Iosevka Nerd Font", sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -61,3 +61,37 @@ window#waybar {
     font-size: 16px; /* Zorgt ervoor dat de kalenderdagen zelf mee schalen */
     padding: 5px;
 }
+
+#custom-layout {
+    padding: 0 12px;
+    margin: 0 4px;
+    color: #cdd6f4;
+}
+
+#custom-theme-toggle {
+    background-color: rgba(43, 48, 59, 0.5); /* Semi-transparent background */
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 0 10px;
+    margin: 4px 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+
+#custom-theme-toggle:hover {
+    background-color: #383c4a;
+    color: #5294e2;
+}
+
+
+
+#custom-updates.pending {
+    color: #ffb86c; /* Warm orange/yellow alert color */
+    font-weight: bold;
+}
+
+#custom-updates.updated {
+    color: #50fa7b; /* Soft green when clean (hidden by script default) */
+}
+

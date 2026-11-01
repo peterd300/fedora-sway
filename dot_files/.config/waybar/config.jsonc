@@ -3,10 +3,9 @@
     "position": "top", 
     "height": 30, 
     "spacing": 4, 
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
-    "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network","tray" , "cpu", "memory", "battery",
-     "custom/power"],
+    "modules-left": ["sway/workspaces","sway/mode","sway/scratchpad"],
+    "modules-center": [ "custom/updates","custom/theme-toggle","clock","custom/layout"],
+    "modules-right": ["pulseaudio", "network","tray" , "cpu", "memory", "battery","custom/power"],
 
     // Sway Workspaces Module
     "sway/workspaces": {
@@ -27,6 +26,21 @@
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
+
+
+    "custom/layout": {
+		"exec": "~/.config/waybar/layout.sh",
+		"return-type": "json",
+		"format": "{icon}",
+		"format-icons": {
+			"splith": "\uf0db",
+			"splitv": "\uf0c9",
+			"stacked": "\uf24d",
+			"tabbed": "\uf2d0",
+			"floating": "\uf2d2",
+			"empty": "\uf10c"
+			}
+	},
 
     "sway/scratchpad": {
         "format": "{icon} {count}",
@@ -114,8 +128,28 @@
     "tray": {
 		"icon-size": 16,
 		"spacing": 10
+	},
+
+	"custom/theme-toggle": {
+	    "format": "{}",
+	    "exec": "gsettings get org.gnome.desktop.interface color-scheme | grep -q 'dark' && echo '🌙' || echo '☀️'",
+	    "interval": 2,
+	    "on-click": "~/.local/bin/gtk-toggle-theme.sh",
+	    "tooltip": true,
+	    "tooltip-format": "Toggle Light/Dark Mode"
+	},
+
+       "custom/updates": {
+		"format": "{}",
+		"exec": "~/.local/bin/check-updates.sh",
+		"return-type": "json",
+		"interval": 3600,
+		"signal": 8,
+		"on-click": "foot sh -c 'sudo dnf upgrade; exec bash'"
+}
+
 	}
-    
     
 
 }
+

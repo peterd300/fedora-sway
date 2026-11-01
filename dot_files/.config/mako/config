@@ -30,3 +30,21 @@ default-timeout=0
 # Keep Spotify notifications on screen for less time
 [app-name=Spotify]
 default-timeout=2000
+
+
+[app-name=osd]
+layer=overlay
+anchor=top-center
+margin=0
+width=200
+padding=0,6
+border-size=0
+border-color=#000000
+border-radius=15
+font=monospace 8
+format=%s
+default-timeout=1500
+text-color=#000000	
+background-color=#807a79
+progress-color=over #35b3e6
+

@@ -17,48 +17,41 @@ trap 'rm -f "$TMP_RAW" "$TMP_FINAL"' EXIT
 
 # Extract all keybindings recursively
 parse_bindings() {
-    cat "$1" | while read -r line; do
-        if [[ "$line" =~ ^[[:space:]]*include[[:space:]]+(.+) ]]; then
-            for sub_file in ${BASH_REMATCH}; do
+    local desc="" cat=""
+    local re_tag='^[[:space:]]*##[[:space:]]*\[([^]]+)\][[:space:]]*(.*)'
+    local re_bind='^[[:space:]]*bind(sym|code)[[:space:]]+([^[:space:]]+)[[:space:]]+(.+)'
+    local re_inc='^[[:space:]]*include[[:space:]]+(.+)'
+
+    while IFS= read -r line; do
+        if [[ "$line" =~ $re_inc ]]; then
+            for sub_file in ${BASH_REMATCH[1]}; do
+                sub_file="${sub_file/#\~/$HOME}"
                 [[ -f "$sub_file" ]] && parse_bindings "$sub_file"
             done
-        elif [[ "$line" =~ ^[[:space:]]*bind(sym|code)[[:space:]]+([^[:space:]]+)[[:space:]]+(.+) ]]; then
-            KEY="${BASH_REMATCH}"
-            ACTION="${BASH_REMATCH}"
-            ACTION=$(echo "$ACTION" | sed 's/[[:space:]]*#.*$//') # Strip inline comments
-            echo "$KEY|$ACTION" >> "$TMP_RAW"
+        elif [[ "$line" =~ $re_tag ]]; then
+            cat="${BASH_REMATCH[1]}"
+            desc="${BASH_REMATCH[2]}"
+        elif [[ "$line" =~ $re_bind ]]; then
+            if [[ -n "$desc" ]]; then
+                key="${BASH_REMATCH[2]//\$mod/Super}"
+                echo "$cat|$key|$desc" >> "$TMP_RAW"
+            fi
+            desc=""
         fi
-    done
+    done < "$1"
 }
 
 parse_bindings "$CONFIG_FILE"
 
-# Build the categorized layout list
-{
-    echo "─── [ APPLICATIONS & LAUNCHERS ] ──────────────────────────"
-    grep -E 'exec (kitty|foot|thunar|geany|imv|rofi|wofi|firefox|chromium|discord|spotify)' "$TMP_RAW" | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-    echo ""
-    
-    echo "─── [ WINDOW MANAGEMENT & MOVING ] ────────────────────────"
-    grep -E '(move|focus|kill|fullscreen|floating|sticky|scratchpad)' "$TMP_RAW" | grep -v -E '(resize|grow|shrink)' | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-    echo ""
-    
-    echo "─── [ RESIZING & LAYOUTS ] ────────────────────────────────"
-    grep -E '(resize|grow|shrink|layout|splith|splitv)' "$TMP_RAW" | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-    echo ""
-    
-    echo "─── [ SYSTEM CONTROLS & AUDIO ] ───────────────────────────"
-    grep -E '(XF86|volume|brightness|exit|reload|restart|lock)' "$TMP_RAW" | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-    echo ""
-    
-    echo "─── [ WORKSPACES ] ────────────────────────────────────────"
-    grep -E 'workspace' "$TMP_RAW" | grep -v -E '(move|focus|exec)' | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-    echo ""
-    
-    echo "─── [ OTHER SHORTCUTS ] ───────────────────────────────────"
-    # Catch any leftover binds that didn't match the specific filters above
-    grep -v -E 'exec (kitty|foot|thunar|geany|imv|rofi|wofi|firefox|chromium|discord|spotify)|(move|focus|kill|fullscreen|floating|sticky|scratchpad)|(resize|grow|shrink|layout|splith|splitv)|(XF86|volume|brightness|exit|reload|restart|lock)|workspace' "$TMP_RAW" | sort -u | awk -F'|' '{printf "%-22s │ %s\n", $1, $2}'
-} > "$TMP_FINAL"
+# Build the layout: grouped by category, "keybind - explanation"
+sort -t'|' -k1,1 -s "$TMP_RAW" | awk -F'|' '
+    $1 != prev {
+        if (NR > 1) print ""
+        print "─── [ " toupper($1) " ] ─────────────────────────"
+        prev = $1
+    }
+    { printf "%-24s - %s\n", $2, $3 }
+' > "$TMP_FINAL"
 
 # Theme validation for Pywal integration
 THEME_FLAG=""

@@ -9,8 +9,13 @@ include /home/peter/.cache/wal/colors-sway
 
 ### Variables
 #
+
+set $QT_QPA_PLATFORMTHEME qt5ct
+
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
+
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -69,13 +74,13 @@ exec swayidle -w \
 #
 # Basics:
 #
-    # Start a terminal
+    ##[APPS] Start a foot terminal
     bindsym $mod+Return exec $term
 
-    # Kill focused window
+    ##[WINDOWS] Kill focused window
     bindsym $mod+Shift+q kill
 
-    # Start your launcher
+    ##[APPS] Start your Rofi App launcher
     bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -88,67 +93,114 @@ exec swayidle -w \
 # Reload the configuration file
 # bindsym $mod+Shift+c reload
 
-#  Reload the configuration file and send a notification
+## [RELOAD] Reload the SWAY configuration file and send a notification
     bindsym $mod+Shift+c exec sh -c "swaymsg reload && notify-send 'Sway Config:' 'Configuration reloaded successfully!'"
 
-#  Press Mod + Shift + B to cleanly reload Waybar and send a notification
+## [RELOAD] Cleanly reload Waybar and send a notification
    bindsym $mod+Shift+b exec killall -SIGUSR2 waybar; exec notify-send "Waybar" "Swaybar reloaded"		
 
-# Exit sway (logs you out of your Wayland session)
+## [EXIT] Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-# Lock the screen 
+## [EXIT] Lock the screen 
     bindsym $mod+ctrl+l  exec swaylock		
 
 #
 # Moving around:
 #
     # Move your focus around
+	## [SWITCH FOCUS] Focus Left  (h key)   
     bindsym $mod+$left focus left
+    
+    ## [SWITCH FOCUS] Focus Down  (j key)  
     bindsym $mod+$down focus down
+    
+    ## [SWITCH FOCUS] Focus Up    (k key) 
     bindsym $mod+$up focus up
+    
+    ## [SWITCH FOCUS] Focus Right (l key)  
     bindsym $mod+$right focus right
     
     # Or use $mod+[up|down|left|right]
+    ## [SWITCH FOCUS] Focus Left    (Left arrow key)
     bindsym $mod+Left focus left
+    
+    ## [SWITCH FOCUS] Focus Down    (Down arrow key)
     bindsym $mod+Down focus down
+    
+    ## [SWITCH FOCUS] Focus UP      (Up Arrow key)
     bindsym $mod+Up focus up
+    
+    ## [SWITCH FOCUS] Focus Right   (Right Arrow key)
     bindsym $mod+Right focus right
 
+
     # Move the focused window with the same, but add Shift
+    ## [MOVE FOCUS] Move Focused Windows to the left (SHIFT-h Key)
     bindsym $mod+Shift+$left move left
+    ## [MOVE FOCUS] Move Focused Windows to Down (SHIFT-j Key)
     bindsym $mod+Shift+$down move down
+    ## [MOVE FOCUS] Move Focused Windows to Up (SHIFT-k Key)
     bindsym $mod+Shift+$up move up
+    ## [MOVE FOCUS] Move Focused Windows to the Right (SHIFT-l Key)
     bindsym $mod+Shift+$right move right
+    
     # Ditto, with arrow keys
+    ## [MOVE FOCUS] Move Focused Windows to the Left (H Key)
     bindsym $mod+Shift+Left move left
+    
+    ## [MOVE FOCUS] Move Focused Windows to the (J Key) 
     bindsym $mod+Shift+Down move down
+    
+    ## [MOVE FOCUS] Move Focused Windows to up (K key) 
     bindsym $mod+Shift+Up move up
+    
+    ## [MOVE FOCUS] Move Focused Windows to the Right (L key)
     bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
-    # Switch to workspace
+## [SWITCH WORKSPACES] Switch to workspace 1
     bindsym $mod+1 workspace number 1
+## [SWITCH WORKSPACES] Switch to workspace 2
     bindsym $mod+2 workspace number 2
+## [SWITCH WORKSPACES] Switch to workspace 3
     bindsym $mod+3 workspace number 3
+## [SWITCH WORKSPACES] Switch to workspace 4
     bindsym $mod+4 workspace number 4
+## [SWITCH WORKSPACES] Switch to workspace 5
     bindsym $mod+5 workspace number 5
+## [SWITCH WORKSPACES] Switch to workspace 6
     bindsym $mod+6 workspace number 6
+## [SWITCH WORKSPACES] Switch to workspace 7
     bindsym $mod+7 workspace number 7
+## [SWITCH WORKSPACES] Switch to workspace 8
     bindsym $mod+8 workspace number 8
+## [SWITCH WORKSPACES] Switch to workspace 9
     bindsym $mod+9 workspace number 9
+## [SWITCH WORKSPACES] Switch to workspace 10
     bindsym $mod+0 workspace number 10
+    
     # Move focused container to workspace
+    ## [MOVE-FOCUSED] Move focused container to workspace number 1
     bindsym $mod+Shift+1 move container to workspace number 1
+    ## [MOVE-FOCUSED] Move focused container to workspace number 2
     bindsym $mod+Shift+2 move container to workspace number 2
+    ## [MOVE-FOCUSED] Move focused container to workspace number 3
     bindsym $mod+Shift+3 move container to workspace number 3
+    ## [MOVE-FOCUSED] Move focused container to workspace number 4
     bindsym $mod+Shift+4 move container to workspace number 4
+    ## [MOVE-FOCUSED] Move focused container to workspace number 5
     bindsym $mod+Shift+5 move container to workspace number 5
+    ## [MOVE-FOCUSED] Move focused container to workspace number 6
     bindsym $mod+Shift+6 move container to workspace number 6
+    ## [MOVE-FOCUSED] Move focused container to workspace number 7
     bindsym $mod+Shift+7 move container to workspace number 7
+    ## [MOVE-FOCUSED] Move focused container to workspace number 8
     bindsym $mod+Shift+8 move container to workspace number 8
+    ## [MOVE-FOCUSED] Move focused container to workspace number 9
     bindsym $mod+Shift+9 move container to workspace number 9
+    ## [MOVE-FOCUSED] Move focused container to workspace number 10
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -168,7 +220,7 @@ client.urgent           $color3          $color3         $color7
 
 
    # Inner gaps affect spacing between each individual view/window
-     gaps inner 10
+    gaps inner 10
 
    # Outer gaps affect spacing around the edges of the workspace
     gaps outer 5
@@ -178,24 +230,34 @@ client.urgent           $color3          $color3         $color7
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
+
+    ## [LAYOUT] Split Current Object Horizontal
     bindsym $mod+b splith
+
+    ## [LAYOUT] Split Current Object Vertical
     bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
+
+    ## [LAYOUT] Switch current container - stacking layout
     bindsym $mod+s layout stacking
+
+    ## [LAYOUT] Switch current container - tabbed layout
     bindsym $mod+w layout tabbed
+
+    ## [LAYOUT] Switch current container - toggle split layout
     bindsym $mod+e layout toggle split
-
-    # Make the current focus fullscreen
+   
+    ## [LAYOUT] Make the current focus fullscreen
     bindsym $mod+f fullscreen
-
-    # Toggle the current focus between tiling and floating mode
+    
+    ## [LAYOUT] Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
 
-    # Swap focus between the tiling area and the floating area
+    ## [LAYOUT] Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
 
-    # Move focus to the parent container
+    ## [LAYOUT] Move focus to the parent container
     bindsym $mod+a focus parent
 #
 # Scratchpad:
@@ -217,6 +279,7 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
+    
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
@@ -232,39 +295,66 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
+	##[RESIZE] Enter Resize Mode
+	bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
+
+
+   bindsym --locked XF86MonBrightnessUp   exec ~/.local/bin/brightness.sh up
+   bindsym --locked XF86MonBrightnessDown exec ~/.local/bin/brightness.sh down
+   bindsym --locked XF86AudioRaiseVolume  exec ~/.local/bin/volume.sh up
+   bindsym --locked XF86AudioLowerVolume  exec ~/.local/bin/volume.sh down
+   bindsym --locked XF86AudioMute         exec ~/.local/bin/volume.sh mute
+
+
     # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
-    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+#    bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+#	bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+#	bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    
 
     # Special keys to adjust brightness via brightnessctl
-    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
-    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+#    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+#    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 
     # Special key to take a screenshot with grim
-    bindsym Print exec grim
-
-    bindsym $mod+g exec geany
-#    assign [app_id="geany"] workspace number 3
     
+    ##[SCREENSHOT] Take Shot entire Workspace 
+    bindsym Print        exec ~/.local/bin/sshot.sh full
+    
+    ##[SCREENSHOT] Takae Shot selected area
+    bindsym Shift+Print  exec ~/.local/bin/sshot.sh area
+    
+    ##[SCREENSHOT] Take Shot entire Workspace 
+    bindsym Ctrl+Print   exec ~/.local/bin/sshot.sh window
+    
+    ##[SCREENSHOT] Take Shot selected area to clipboard
+    bindsym Mod4+Print   exec ~/.local/bin/sshot.sh -c area 
+
+
+
+    ##[APPS] Start a Geany Text Editor
+    bindsym $mod+g exec geany
+  
+    ##[APPS] Start a Thunar Filemanager
     bindsym $mod+t exec thunar
     
-    bindsym $mod+z exec firefox
-#    assign [app_id="firefox"] workspace number 2
-    
+    ##[APPS] Start a Firefox Web Browser
+    bindsym $mod+z exec firefox    
 
 #
 # termimals
 #
+    ##[APPS] Start a kitty terminal
     bindsym $mod+Shift+Return exec kitty
+    
+    ##[APPS] Start a xterm terminal
     bindsym $mod+Alt+Return exec xterm
     
 # display keybindings
+    ##[INFO] This info page
     bindsym $mod+Shift+slash exec ~/.local/bin/sway-keys.sh
 #
 # Status Bar:
@@ -287,11 +377,14 @@ bindsym $mod+r mode "resize"
      exec dbus-update-activation-environment --systemd SWAYSOCK XDG_CURRENT_DESKTOP=sway
      exec --no-startup-id waybar > /dev/null 2>&1
      exec --no-startup-id mako
+
      # load .Xresources for X11 apps
-     exec xrdb -merge -display $DISPLAY ~/.Xresources
+#     exec xrdb -merge -display $DISPLAY ~/.Xresources
 
 
 	 exec nm-applet --indicator
+	 
+	 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1.0
 	
 	# Laad de systeemconfiguraties eerst in
 	include /etc/sway/config.d/*

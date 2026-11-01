@@ -1,4 +1,4 @@
- sudo dnf -y upgrade --refresh
+sudo dnf -y upgrade --refresh
 !/bin/bash
 #  Install script for Wayland anD Sway  Tiling Windows Manager
 #  
@@ -23,7 +23,7 @@ sleep 3
 sudo dnf -y install tree htop btop make bat git wget unzip nano cmake curl gcc net-tools fastfetch trash-cli micro vim
 
 # install sway tiling wm
-sudo dnf -y install sway swaybg rofi-wayland waybar wl-clipboard wofi
+sudo dnf -y install sway swaybg rofi-wayland waybar wl-clipboard wofi wev
 
 sudo dnf -y install xdg-desktop-portal-gtk xdg-utils 
 
@@ -44,14 +44,14 @@ sudo dnf install -y geany geany-themes geany-plugins-vimode  geany-plugins-commo
 geany-plugins-addons geany-plugins-autoclose geany-plugins-automark geany-plugins-markdown \
 geany-plugins-git-changebar geany-plugins-treebrowser
 
-# icons themes
-sudo dnf install -y papirus-icon-theme
+# icons and gtk3 themes
+sudo dnf -y install papirus-icon-theme breeze-gtk-gtk3  breeze-gtk-gtk4
 
 # install wallpaper switcher
-sudo dnf install -y waypaper swww
+sudo dnf -y install waypaper swww
 
 # install GTK3 
-sudo dnf -y install nwg-look
+#sudo dnf -y install nwg-look qt5ct qt6ct darkman
 
 sudo dnf -y install NetworkManager-tui blueman network-manager-applet brightnessctl pipewire-utils wireplumber
 
